@@ -52,27 +52,41 @@ void findPerfects(long stop) {
     cout << endl << "Done searching up to " << stop << endl;
 }
 
-/* TODO: Replace this comment with a descriptive function
- * header comment.
+/* TODO: change the upper limit of divisor to sqrt(n), attention
+ * for `<=`
+ * A perfect number is a non-zero positive number whose sum
+ * of its proper divisors is equal to itself.
  */
+
 long smarterSum(long n) {
     /* TODO: Fill in this function. */
-    return 0;
+    long total = 0;
+    for (long divisor = 2; divisor <= sqrt(n); divisor++){
+        if (n % divisor == 0){
+            total += (divisor + n/divisor);
+        }
+    }
+    return total+1;
 }
 
 /* TODO: Replace this comment with a descriptive function
  * header comment.
  */
 bool isPerfectSmarter(long n) {
-    /* TODO: Fill in this function. */
-    return false;
+    return (n != 0) && (n != 1) && (n == smarterSum(n));
 }
 
 /* TODO: Replace this comment with a descriptive function
  * header comment.
  */
 void findPerfectsSmarter(long stop) {
-     /* TODO: Fill in this function. */
+    for (long num = 1; num < stop; num++) {
+        if (isPerfectSmarter(num)) {
+            cout << "Found perfect number: " << num << endl;
+        }
+        if (num % 10000 == 0) cout << "." << flush; // progress bar
+    }
+    cout << endl << "Done searching up to " << stop << endl;
 }
 
 /* TODO: Replace this comment with a descriptive function
@@ -117,10 +131,34 @@ PROVIDED_TEST("Confirm 33550336 is perfect") {
 }
 
 PROVIDED_TEST("Time trials of findPerfects on doubling input sizes") {
-    TIME_OPERATION(10000, findPerfects(10000));
-    TIME_OPERATION(20000, findPerfects(20000));
-    TIME_OPERATION(40000, findPerfects(40000));
+    TIME_OPERATION(15000, findPerfects(15000));
+    TIME_OPERATION(30000, findPerfects(30000));
+    TIME_OPERATION(60000, findPerfects(60000));
+    TIME_OPERATION(120000, findPerfects(120000));
+}
+
+STUDENT_TEST("Time trials of findPerfects on doubling input sizes") {
+    TIME_OPERATION(15000, findPerfectsSmarter(15000));
+    TIME_OPERATION(30000, findPerfectsSmarter(30000));
+    TIME_OPERATION(60000, findPerfectsSmarter(60000));
+    TIME_OPERATION(120000, findPerfectsSmarter(120000));
 }
 
 // TODO: add your student test cases here
+STUDENT_TEST("Confirm -6 and -28 are perfect") {
+    EXPECT(isPerfect(-6));
+    EXPECT(isPerfect(-28));
+}
 
+STUDENT_TEST("Confirm 33550336 is perfect") {
+    EXPECT(isPerfect(33550336));
+}
+
+STUDENT_TEST("Confirm 6 and 28 are perfect") {
+    EXPECT(isPerfectSmarter(6));
+    EXPECT(isPerfectSmarter(28));
+}
+
+STUDENT_TEST("Confirm 33550336 is perfect") {
+    EXPECT(isPerfectSmarter(33550336));
+}
