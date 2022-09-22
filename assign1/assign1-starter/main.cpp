@@ -23,22 +23,22 @@ int main() {
 
 // Do not remove or edit below this line. It is here to to confirm that your code
 // conforms to the expected function prototypes needed for grading
-//void confirmFunctionPrototypes() {
-//    long n = 0;
-//    bool b;
-//    string s;
+void confirmFunctionPrototypes() {
+    long n = 0;
+    bool b;
+    string s;
 
-//    n = divisorSum(n);
-//    b = isPerfect(n);
-//    findPerfects(n);
+    n = divisorSum(n);
+    b = isPerfect(n);
+    findPerfects(n);
 
-//    n = smarterSum(n);
-//    b = isPerfectSmarter(n);
-//    findPerfectsSmarter(n);
+    n = smarterSum(n);
+    b = isPerfectSmarter(n);
+    findPerfectsSmarter(n);
 
-//    n = findNthPerfectEuclid(n);
+    n = findNthPerfectEuclid(n);
 
-//    s = removeNonLetters(s);
-//    s = soundex(s);
-//    soundexSearch(s);
-//}
+    s = removeNonLetters(s);
+    s = soundex(s);
+    soundexSearch(s);
+}
