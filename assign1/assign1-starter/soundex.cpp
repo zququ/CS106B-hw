@@ -12,6 +12,8 @@
 #include <cctype>
 #include <string>
 #include "vector.h"
+#include <iostream>
+#include <cstring>
 using namespace std;
 
 /* This function is intended to return a string which
@@ -19,12 +21,35 @@ using namespace std;
  * (all non-letter characters are removed)
  *
  * WARNING: The provided code is buggy!
- *
- * Use unit tests to identify which inputs to this function
- * are incorrectly handled. Then, remove this comment and
- * replace it with a description of the bug you fixed.
+ * First of the inputs can't be a char.
+ * ------------------------------------
+ * make a while loop to force first char to be the first
+ * number.
  */
+
+//A program to output the firt caption of
+//the input string.
+//getCap
+//------
+
+
+char getCap(string s) {
+    char CAP = s[0];
+    return CAP;
+}
+
 string removeNonLetters(string s) {
+    long num = 1;
+    while(true){
+        if (!isalpha(s[0])){
+            s[0] = s[num];
+            s[num] = '@';
+            num++;
+            }
+        if (isalpha(s[0])){
+            break;
+        }
+    }
     string result = charToString(s[0]);
     for (int i = 1; i < s.length(); i++) {
         if (isalpha(s[i])) {
@@ -34,13 +59,90 @@ string removeNonLetters(string s) {
     return result;
 }
 
+string soundexCoding(string s){
+    for (long pos = 0; pos < s.length(); pos++){
+        switch (toupper(s[pos])){
+            case 'A': case 'E': case 'I': case 'O': case 'U': case 'H': case 'W': case 'Y':
+                s[pos] = '0';
+            break;
+            case 'B': case 'F': case 'P': case 'V':
+                s[pos] = '1';
+            break;
+            case 'C': case 'G': case 'J': case 'K': case 'Q': case 'S': case 'X': case 'Z':
+                s[pos] = '2';
+            break;
+            case 'D': case 'T':
+                s[pos] = '3';
+            break;
+            case 'L':
+                s[pos] = '4';
+            break;
+            case  'M': case 'N':
+                s[pos] = '5';
+            break;
+            case 'R':
+                s[pos] = '6';
+            break;
+        }
+        }
+    return s;
+}
 
-/* TODO: Replace this comment with a descriptive function
- * header comment.
+//kick the fucking duplexes out of my string.
+//-------------------------------------------
+
+string stringDePlex(string s){
+    string result = charToString(s[0]);
+    for (long pos = 1; pos < s.length(); pos++){
+        if (s[pos]!=s[pos-1]){
+            result += s[pos];
+        }
+    }
+    return result;
+}
+
+//reslove the zero problems.
+//--------------------------
+
+string zeroProblem(string s){
+    string result = charToString(s[0]);
+    for (long pos = 1; pos < s.length(); pos++){
+        if (s[pos]!='0'){
+            result += s[pos];
+        }
+    }
+    return result;
+}
+
+//Add enough zeros
+//________________
+
+string addZeros(string s){
+    if (s.length() < 4){
+        while (true){
+            s += '0';
+            if (s.length() == 4){
+                break;
+        }
+        }
+    }
+   else if (s.length() >= 4){
+        s = s.substr(0,4);
+        }
+    return s;
+}
+
+
+
+/* main program, output the coded NAME input.
+ * __________________________________________
+ * including a line to make the first alphabet
+ * uppercase.
  */
 string soundex(string s) {
-    /* TODO: Fill in this function. */
-    return "";
+    string result = addZeros(zeroProblem(stringDePlex(soundexCoding(removeNonLetters(s)))));
+    result[0] = toupper(getCap(s));
+    return result;
 }
 
 
@@ -61,10 +163,22 @@ void soundexSearch(string filepath) {
 
     // The names in the database are now stored in the provided
     // vector named databaseNames
-
     /* TODO: Fill in the remainder of this function. */
+    char name[256];
+    cout << "Enter a surname (RETURN to quit): ";
+    cin.getline(name, 256);
+    string nameInput = soundex(name);
+    cout << "Soundex code is: " << nameInput << endl;
+    databaseNames.sort();
+    cout << "Matches from database: {";
+    vector<string> new_vector;
+    for (unsigned int i = 0; i < databaseNames.size(); i++){
+        if (soundex(databaseNames[i]) == nameInput) {
+            cout << databaseNames[i] << ", ";
+        }
+    }
+    cout << "\b\b}";
 }
-
 
 /* * * * * * Test Cases * * * * * */
 
@@ -133,6 +247,10 @@ PROVIDED_TEST("Ashcraft is not a special case") {
     EXPECT_EQUAL(soundex("Ashcraft"), "A226");
 }
 
-// TODO: add your test cases here
-
-
+//// TODO: add your test cases here
+//// character at 1st place will induce error
+PROVIDED_TEST("Test removing puntuation, digits, and spaces") {
+    string s = "@A";
+    string result = removeNonLetters(s);
+    EXPECT_EQUAL(result, "A");
+}

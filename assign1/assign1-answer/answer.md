@@ -111,6 +111,17 @@ STUDENT_TEST("Confirm find 6 perfect number is ok." ){
 
 `findNthPerfectEuclid(6)` --> 机器能力内，较大计算量的压力测试。
 
+### Q10
 
+"Angelou" 的编码
+
+0520400 --> A524
+
+### Q11
+
+1. 去特殊符号、保留首字母并大写；
+2. 字母编码为数字；
+3. 去掉重复数字、去掉零；
+4. 长度小于4，填充0；长度大于等于4截短length-4长度。
 
 
