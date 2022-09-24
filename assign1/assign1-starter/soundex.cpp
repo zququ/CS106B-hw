@@ -16,6 +16,18 @@
 #include <cstring>
 using namespace std;
 
+//A program to output the firt caption of
+//the input string.
+//getCap funciton
+//To get the first uppercase of the input name
+//--------------------------------------------
+//stored here to be used at later
+
+char getCap(string s) {
+    char CAP = s[0];
+    return CAP;
+}
+
 /* This function is intended to return a string which
  * contains only the letter characters from the original
  * (all non-letter characters are removed)
@@ -26,17 +38,6 @@ using namespace std;
  * make a while loop to force first char to be the first
  * number.
  */
-
-//A program to output the firt caption of
-//the input string.
-//getCap
-//------
-
-
-char getCap(string s) {
-    char CAP = s[0];
-    return CAP;
-}
 
 string removeNonLetters(string s) {
     long num = 1;
@@ -58,6 +59,11 @@ string removeNonLetters(string s) {
     }
     return result;
 }
+
+//soundexCoding fuction
+//translate alphabet group to coded numbers
+//-----------------------------------------
+//using switch case form is a good choice
 
 string soundexCoding(string s){
     for (long pos = 0; pos < s.length(); pos++){
@@ -88,6 +94,9 @@ string soundexCoding(string s){
     return s;
 }
 
+//stringDePlex function
+//Make the repeated alphabet out
+//------------------------------
 //kick the fucking duplexes out of my string.
 //-------------------------------------------
 
@@ -101,8 +110,11 @@ string stringDePlex(string s){
     return result;
 }
 
+//zeroProblem function
 //reslove the zero problems.
 //--------------------------
+//for detail, make a 'if' statement,
+//only add non-zero to after the s[0]
 
 string zeroProblem(string s){
     string result = charToString(s[0]);
@@ -116,6 +128,8 @@ string zeroProblem(string s){
 
 //Add enough zeros
 //________________
+// may merge with zeroProblem function？
+
 
 string addZeros(string s){
     if (s.length() < 4){
@@ -140,7 +154,9 @@ string addZeros(string s){
  * uppercase.
  */
 string soundex(string s) {
+//    main program call all the functions
     string result = addZeros(zeroProblem(stringDePlex(soundexCoding(removeNonLetters(s)))));
+//    To add the first uppercase alphabet
     result[0] = toupper(getCap(s));
     return result;
 }
@@ -164,22 +180,32 @@ void soundexSearch(string filepath) {
     // The names in the database are now stored in the provided
     // vector named databaseNames
     /* TODO: Fill in the remainder of this function. */
-    char name[256];
-    cout << "Enter a surname (RETURN to quit): ";
-    cin.getline(name, 256);
-    string nameInput = soundex(name);
-    cout << "Soundex code is: " << nameInput << endl;
-    databaseNames.sort();
-    cout << "Matches from database: {";
-    vector<string> new_vector;
-    for (unsigned int i = 0; i < databaseNames.size(); i++){
-        if (soundex(databaseNames[i]) == nameInput) {
-            cout << databaseNames[i] << ", ";
-        }
-    }
-    cout << "\b\b}";
-}
 
+//    define a char array with 256 space
+    char name[256];
+    while (true){
+        cout << "Enter a surname (RETURN to quit): ";
+        cin.getline(name, 256);
+//        Judge if the first element of array name (char[])
+//        is NULL to quit the while recyling
+        if (name[0] == NULL){
+            break;
+        }
+        string nameInput = soundex(name);
+        cout << "Soundex code is: " << nameInput << endl;
+        databaseNames.sort();
+        cout << "Matches from database: {";
+
+//        walk through the database to judge
+        for (unsigned int i = 0; i < databaseNames.size(); i++){
+            if (soundex(databaseNames[i]) == nameInput) {
+                cout << databaseNames[i] << ", ";
+            }
+        }
+//        "\b\b" to delete the ugly ',' at last, but fail~
+        cout << "\b\b}" << endl;
+    }
+}
 /* * * * * * Test Cases * * * * * */
 
 
