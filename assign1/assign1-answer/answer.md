@@ -19,7 +19,7 @@
 
 作图如下：
 
-![p2](assets/predicted-time-for-4th-perfectnumber.png)
+![p2](assets/predicted-time-for-5th-perfectnumber.png)
 
 ### Q3 对于 10 与 1000，计算 isPerfect是否做了同样多的工作？为什么一样多，或者为什么不一样多？对于搜索范围为 1-1000 的数，findPerfect其工作量是否与 1000-2000 时一致？为什么一样多，或者为什么不一样多？
 
