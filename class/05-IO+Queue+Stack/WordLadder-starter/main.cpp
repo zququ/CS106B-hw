@@ -21,46 +21,11 @@ using namespace std;
  * @param end
  * @return 将计算出的单词阶梯以栈的形式保存
  */
-Stack<string> findWordLadder(string start, string end
-                             ) {
+Stack<string> findWordLadder(string start, string end) {
     // TODO: 删除以下两行代码，实现这个函数。
-    // What we have: 1. visitedWords - 由于栈无法遍历查询，转换为集合类型;
-    // ------------- 2. nextWords - 根据提供的 currentWord 找出与其仅一字之差的单词。
-//    (void)start;
-//    (void)end;
+    (void)start;
+    (void)end;
 
-    // prepare a todolist
-    Queue<Stack<string>> todolist;
-    Stack<string> init = {start};
-    todolist.enqueue(init);
-
-    while(!todolist.isEmpty()){
-        Stack<string> curladdar = todolist.dequeue();
-        string word = curladdar.peek();
-//        if (word == end) {
-//            cout << curladdar << endl;
-//            return curladdar;
-//        }
-        if (curladdar.toString().find("dog") != string::npos){
-            cout << curladdar << endl;
-            return curladdar;
-        }
-        Set<string> next = nextWords(word);   // {cat, cap}
-            for (const string &items : next){
-                Stack<string> curladdar_copy = curladdar;
-                Queue<Stack<string>> todolist_copy = todolist;
-                string string_copy = curladdar_copy.toString();
-                string string_todolist = todolist_copy.toString();
-                if (string_copy.find(items) == string::npos && string_todolist.find(string_copy) == string::npos) {
-                    curladdar_copy.push(items);
-                    todolist.enqueue(curladdar_copy);
-                }
-
-            }
-//    if (todolist.toString().find("dog") != string::npos){
-//        cout << curladdar << endl;
-//    }
-}
     return {};
 }
 
@@ -68,7 +33,7 @@ Stack<string> findWordLadder(string start, string end
 
 int main() {
     // 初始化单词表
-    ifstream fin("res/SelectiveWords.txt");
+    ifstream fin("res/EnglishWords.txt");
     string word;
     while (fin >> word) {
         dictionary.add(word);
@@ -133,10 +98,5 @@ Set<string> nextWords(string currentWord) {
             }
         }
     }
-//    cout << "before" << endl;
-////    cout << neighboringWords << endl;
-//    neighboringWords.remove(currentWord);
-//    cout << "after" << endl;
-//    cout << neighboringWords << endl;
     return neighboringWords;
 }
