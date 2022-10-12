@@ -7,7 +7,9 @@ using namespace std;
 
 static const double MAX_ORDER = 10;
 
+#define subdivideCanvas1
 #ifdef subdivideCanvas1
+
 void subdivideCanvas(GWindow &window, double x, double y, double width, double height, int order) {
     // 用阶定义复杂度
     if (order == 0) {
@@ -34,7 +36,7 @@ void subdivideCanvas(GWindow &window, double x, double y, double width, double h
 }
 #endif
 
-#define subdivideCavas2
+
 #ifdef subdivideCavas2
 void subdivideCanvas(GWindow &window, double x, double y, double width, double height, int order) {
     if (width > height){
@@ -46,7 +48,14 @@ void subdivideCanvas(GWindow &window, double x, double y, double width, double h
         subdivideCanvas(window, x + mid, y, width - mid, height, order-1);
     }
 
-    if ()
+    else {
+        double mid = 0.618 * width;
+
+        window.drawLine(x, y + mid, x + width, y + mid);
+
+        subdivideCanvas(window, x, y, width, mid, order - 1);
+        subdivideCanvas(window, x, y + mid, width, height -mid, order -1);
+    }
 }
 
 #endif
