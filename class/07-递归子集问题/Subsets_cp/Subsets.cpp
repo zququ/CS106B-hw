@@ -142,28 +142,24 @@ int main() {
 #endif
 
 #ifdef version_b
-void listSubsetsOfRec(const Vector<int> &elems, const Vector<int> &soFar) {
-    // 1. Base Case
-    if (elems.isEmpty()) {
-        cout << soFar << endl;
+void listSubsets_helper(const Vector<int> &elems, const Vector<int> &soFar){
+    if(elems.isEmpty()) {
     } else {
-        // 2. Reducing
-        int item = elems[0];
+        int first = elems[0];
         auto remains = elems.subList(1);
-        // 3.1 Include
-        listSubsetsOfRec(remains, soFar + item);
-        // 3.2 Exclude
-        listSubsetsOfRec(remains, soFar);
+        listSubsets_helper(remains, soFar + first);
+        listSubsets_helper(remains, soFar);
+        cout << remains << endl;
     }
 }
 
-void listSubsetsOf(const Vector<int> &elems) {
-    listSubsetsOfRec(elems, {});
+void listSubsets(Vector<int> &elems){
+    listSubsets_helper(elems, {});
 }
 
 int main() {
     Vector<int> elems = {1, 2, 3};
-    listSubsetsOf(elems);
+    listSubsets(elems);
     return 0;
 }
 #endif
