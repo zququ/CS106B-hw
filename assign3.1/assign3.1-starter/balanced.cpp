@@ -22,7 +22,15 @@ using namespace std;
 string operatorsFrom(string str) {
     // process the first char, `if` can be returned
     if (str.length()!=0){
-        if (!ispunct(str[0])) {return operatorsFrom(str.substr(1));}
+        if (str[0] != '(' &&
+                str[0] != ')' &&
+                str[0] != '[' &&
+                str[0] != ']' &&
+                str[0] != '{' &&
+                str[0] != '}')
+        {
+            return operatorsFrom(str.substr(1));
+        }
         // process the left string and save to the result, recursively;
         else {return str[0] + operatorsFrom(str.substr(1));}
 }
@@ -126,10 +134,16 @@ PROVIDED_TEST("isBalanced on non-balanced examples from writeup") {
 
 /* * * * * * Student Cases * * * * * */
 
-STUDENT_TEST("mytest1")
+STUDENT_TEST("mytest1 for operatorsFrom")
 {
-    EXPECT_EQUAL(operatorsFrom("ccaqwre()JLKJ{KJq123}"), "(){}");
+    EXPECT_EQUAL(operatorsFrom("ccaq$%^$%$@#!$*^*&*_(*)+&%wreJLKJ{KJq123}"), "(){}");
     EXPECT_EQUAL(operatorsFrom(""), "");
     EXPECT_EQUAL(operatorsFrom("()"), "()");
 }
 
+STUDENT_TEST("mytest2 for operatorsAreMatched") {
+    EXPECT(operatorsAreMatched("{}"));
+    EXPECT(operatorsAreMatched("(())"));
+    EXPECT(operatorsAreMatched("()[]"));
+    EXPECT(!operatorsAreMatched("("));
+}

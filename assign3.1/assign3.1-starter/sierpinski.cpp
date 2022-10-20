@@ -25,6 +25,18 @@ void fillBlackTriangle(GWindow& window, GPoint one, GPoint two, GPoint three) {
  */
 int drawSierpinskiTriangle(GWindow& window, GPoint one, GPoint two, GPoint three, int order) {
     /* TODO: Implement this function. */
+    GPoint   mid_one(double mid_x, double mid_y);
+    GPoint   mid_two(double mid_x, double mid_y);
+    GPoint mid_three(double mid_x, double mid_y);
+
+    mid_one.mid_x = 1/2 * (one.x + two.x);
+    mid_one.mid_y = 1/2 * (one.y + two.y);
+    mid_two.mid_x = 1/2 * (two.x + two.y);
+    mid_two.mid_y = 1/2 * (two.y + two.y);
+    mid_three.mid_x = 1/2 * (three.x + three.x);
+    mid_three.mid_y = 1/2 * (three.y + three.y);
+
+    fillBlackTriangle(window, one, mid_one, mid_two);
     return 0;
 }
 

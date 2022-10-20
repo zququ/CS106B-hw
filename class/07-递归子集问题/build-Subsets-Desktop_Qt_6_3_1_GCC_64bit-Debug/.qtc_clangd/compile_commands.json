@@ -39,7 +39,7 @@
         "-I",
         "/home/zququ/Qt/Tools/QtCreator/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore",
         "-I",
-        "/home/zququ/CLASS/CS106/CS106B-hw/class/07-递归子集问题/Subsets",
+        "/home/zququ/CLASS/CS106/CS106B-hw/class/07-递归子集问题/Subsets_cp",
         "-I",
         "/home/zququ/.local/share/cs106/include",
         "-I",
@@ -77,9 +77,9 @@
         "-ferror-limit=1000",
         "-x",
         "c++",
-        "/home/zququ/CLASS/CS106/CS106B-hw/class/07-递归子集问题/Subsets/Subsets.cpp"
+        "/home/zququ/CLASS/CS106/CS106B-hw/class/07-递归子集问题/Subsets_cp/Subsets.cpp"
     ],
     "directory": "/home/zququ/CLASS/CS106/CS106B-hw/class/07-递归子集问题/build-Subsets-Desktop_Qt_6_3_1_GCC_64bit-Debug/.qtc_clangd",
-    "file": "/home/zququ/CLASS/CS106/CS106B-hw/class/07-递归子集问题/Subsets/Subsets.cpp"
+    "file": "/home/zququ/CLASS/CS106/CS106B-hw/class/07-递归子集问题/Subsets_cp/Subsets.cpp"
 }
 ]
