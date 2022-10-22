@@ -31,7 +31,6 @@ int drawSierpinskiTriangle(GWindow& window, GPoint one, GPoint two, GPoint three
 
     if (order==0){
         fillBlackTriangle(window, one, two, three);
-        return 0;
     }
 
     mid_one = {0.5 * (one.x + two.x), 0.5 * (one.y + two.y)};
