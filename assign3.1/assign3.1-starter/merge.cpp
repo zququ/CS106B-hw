@@ -9,13 +9,61 @@
 #include "testing/SimpleTest.h"
 using namespace std;
 
-/*
- * TODO: Replace this comment with a descriptive function
- * header comment.
+/* @brief       binaryMerge
+ * @description 1. queue one and two has been ranked, returned value
+ *                 should also be ranked with all elements in one and
+ *                 two.
+ *              2. queue one and two are transfered with value. So what
+ *                 binaryMerge function get is a copy. And you can operate
+ *                 this two values as you wish. There is no any requirement
+ *                 about the end state of these queue copies.
+ *              3. length of two queues are not required to be the seem.
+ *                 One could be long and the other could be empty. Make sure
+ *                 program can resolve all possibilities.
+ *				4. replications are not need to be resolved, merge {1,2,2}
+ *				   and {1, 3} will give {1,1,2,2,3}
+ *              5. hint: you can split the mission to two sub-missions, make
+ *				   sure the next elements to be solved and make it.
+ *				6. important: you should use iteration but not recursive
+ *				   to fullfil the binaryMerge. Because it is too expensive
+ *			       to create a stack frame for each merged element.
+ * @params		  Queue a and Queue b
+ * @return      Merged Queue result
  */
 Queue<int> binaryMerge(Queue<int> a, Queue<int> b) {
+    const int size_a = a.size();
+    const int size_b = b.size();
+    Vector<int> vec_a={};
+    Vector<int> vec_b={};
     Queue<int> result;
-    /* TODO: Implement this function. */
+    for (int i = 0; i < size_a -1 ; i++){
+        int cur_int  = a.dequeue();
+        int next_int = a.peek();
+        if (cur_int > next_int){
+            error("the first input is not well sorted");
+        } else {
+            vec_a += cur_int;
+        }
+    }
+    for (int i = 0; i < size_b - 1 ; i++){
+        int cur_int2  = b.dequeue();
+        int next_int2 = b.peek();
+        if (cur_int2 > next_int2){
+            error("the second input is not well sorted");
+        } else {
+            vec_b += cur_int2;
+        }
+    }
+    vec_a += a.dequeue();
+    vec_b += b.dequeue();
+
+    for (const int elems1 : vec_a){
+        vec_b += elems1;
+    }
+    vec_b.sort();
+    for (const int &elems2 : vec_b){
+        result.enqueue(elems2);
+    }
     return result;
 }
 
@@ -120,4 +168,10 @@ void distribute(Queue<int> input, Vector<Queue<int>>& all) {
     while (!input.isEmpty()) {
         all[randomInteger(0, all.size()-1)].enqueue(input.dequeue());
     }
+}
+
+STUDENT_TEST("not sorted sequence test if error"){
+    Queue<int> a = {2, 4, 5};
+    Queue<int> b = {1, 9, 2};
+    EXPECT_ERROR(binaryMerge(a, b));
 }

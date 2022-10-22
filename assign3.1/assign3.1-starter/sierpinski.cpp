@@ -20,8 +20,9 @@ void fillBlackTriangle(GWindow& window, GPoint one, GPoint two, GPoint three) {
 }
 
 /*
- * TODO: Replace this comment with a descriptive function
- * header comment.
+ * @brief  drawSierpinskiTriangle
+ * @params window, first, second, third point coordinate. recursive order.
+ * @return sum number of the drawn black triangles.
  */
 int drawSierpinskiTriangle(GWindow& window, GPoint one, GPoint two, GPoint three, int order) {
 
