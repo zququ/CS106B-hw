@@ -27,6 +27,15 @@ Set<GridLocation> generateValidMoves(Grid<bool>& maze, GridLocation cur) {
     /* TODO: Fill in the remainder of this function. */
     GridLocation next;
 
+    // 用 inBounds 接口，减少使用底层代码：row+1 col-1 等等 ###
+
+
+    // 定义四个变量
+
+    // 判断 inbounds
+
+    // 判断 wall/false
+
     next = GridLocation(cur.row - 1, cur.col);
     if (maze.inBounds(next) && maze[next]) // 是否在地图内？是否是通道？
         neighbors.add(next);
@@ -57,6 +66,16 @@ void validatePath(Grid<bool> &maze, Stack<GridLocation> path) {
  */
 void validatePath(Grid<bool>& maze, Stack<GridLocation> path) {
     GridLocation mazeExit = {maze.numRows()-1,  maze.numCols()-1};
+
+    // 判断 path 顶端是否等于 exit
+    // 定义 一个 ADT 存放 visited
+    // 循环操作：
+        // 取出栈顶，pop， 通过 pop计算 generateValidMoves
+        // peek 是否在 generateValidMoves
+        // 判断是否在 visited 里面
+        // 不重复则添加到 visited 里面
+
+    // 判断起点
 
     if (path.peek() != mazeExit) {
         error("路径不是在终点结束");

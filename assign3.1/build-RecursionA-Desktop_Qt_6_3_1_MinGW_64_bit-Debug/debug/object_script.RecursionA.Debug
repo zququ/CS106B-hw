@@ -1,0 +1,15 @@
+debug/balanced.o
+debug/main.o
+debug/merge.o
+debug/sierpinski.o
+debug/warmup.o
+debug/EmptyProblemHandler.o
+debug/GUIMain.o
+debug/GUIUtils.o
+debug/GVector.o
+debug/ProblemHandler.o
+debug/SierpinskiGUI.o
+debug/MemoryDiagnostics.o
+debug/TestDriver.o
+debug/TestingGUI.o
+debug/TextUtils.o

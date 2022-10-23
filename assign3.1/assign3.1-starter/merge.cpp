@@ -104,58 +104,25 @@ Queue<int> naiveMultiMerge(Vector<Queue<int>>& all) {
  * @params      Vector<Queue<int>> &all
  * @return      merged result
  */
+
 Queue<int> recMultiMerge(Vector<Queue<int>>& all) {
     Queue<int> result;
     Queue<int> l_result;
     Queue<int> r_result;
-    int k = all.size();
-    auto first_half = all.subList(0, k/2);
-    auto second_half = all.subList(k/2);
-    int l_k = first_half.size();
-    int r_k = second_half.size();
+    auto first_half = all.subList(0, all.size()/2);
+    auto second_half = all.subList(all.size()/2);
 
-    if (!first_half.isEmpty()){
-        if (l_k <= 1) {
-            l_result.enqueue(first_half[0].dequeue());
-        }
-        else {
-            recMultiMerge(first_half);
-        }
-}
-    if (!second_half.isEmpty()){
-        if (r_k <=1) {
-            r_result.enqueue(second_half[0].dequeue());
-        }
-        else {
-            recMultiMerge(second_half);
-        }
+    if (all.size() == 2){
+        return binaryMerge(all[0], all[1]);
     }
-
-
-
-
-//    int l_k = first_half.size();
-//    int r_k = second_half.size();
-
-//    if (l_k > 0){
-//        if (l_k == 1) {
-//            l_result = binaryMerge(first_half[0], {});
-//        } else {
-//            recMultiMerge(first_half);
-//        }
-//    }
-
-//    if (r_k > 0){
-//        if (r_k == 1) {
-//            r_result = binaryMerge(second_half[0], {});
-//        } else {
-//            recMultiMerge(second_half);
-//        }
-//    }
-//    result = binaryMerge(l_result, r_result);
-    return result = binaryMerge(l_result, r_result);
+    if (all.size() == 1){
+        return all[0];
+    } else {
+        l_result = recMultiMerge(first_half);
+        r_result = recMultiMerge(second_half);
+        return binaryMerge(l_result, r_result);
+    }
 }
-
 
 /* * * * * * Test Cases * * * * * */
 
