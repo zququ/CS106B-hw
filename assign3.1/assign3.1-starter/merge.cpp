@@ -36,31 +36,42 @@ Queue<int> binaryMerge(Queue<int> a, Queue<int> b) {
     Vector<int> vec_a={};
     Vector<int> vec_b={};
     Queue<int> result;
-    for (int i = 0; i < size_a -1 ; i++){
-        int cur_int  = a.dequeue();
-        int next_int = a.peek();
-        if (cur_int > next_int){
-            error("the first input is not well sorted");
-        } else {
-            vec_a += cur_int;
-        }
-    }
-    for (int i = 0; i < size_b - 1 ; i++){
-        int cur_int2  = b.dequeue();
-        int next_int2 = b.peek();
-        if (cur_int2 > next_int2){
-            error("the second input is not well sorted");
-        } else {
-            vec_b += cur_int2;
-        }
-    }
-    vec_a += a.dequeue();
-    vec_b += b.dequeue();
 
+    if (!a.isEmpty()){
+        for (int i = 0; i < size_a -1 ; i++){
+            int cur_int  = a.dequeue();
+            int next_int = a.peek();
+            if (cur_int > next_int){
+                error("the first input is not well sorted");
+            } else {
+                vec_a += cur_int;
+            }
+        }
+            vec_a += a.dequeue(); // add the last elems after for recycling
+                                  // aim to resolve the dequeue empty vector problem.
+        } else {vec_a = {};}
+
+    if(!b.isEmpty()){
+        for (int i = 0; i < size_b - 1 ; i++){
+            int cur_int2  = b.dequeue();
+            int next_int2 = b.peek();
+            if (cur_int2 > next_int2){
+                error("the second input is not well sorted");
+            } else {
+                vec_b += cur_int2;
+            }
+        }
+        vec_b += b.dequeue();
+    } else {vec_b ={};}
+
+    // put elems from vec_a to vec_b
     for (const int elems1 : vec_a){
         vec_b += elems1;
     }
+
     vec_b.sort();
+
+    // from vector to queue
     for (const int &elems2 : vec_b){
         result.enqueue(elems2);
     }
@@ -85,13 +96,64 @@ Queue<int> naiveMultiMerge(Vector<Queue<int>>& all) {
 }
 
 /*
- * TODO: Replace this comment with a descriptive function
- * header comment.
+ * @brief       recMultiMerge
+ * @description 1. cut k sequences into half
+ *              2. call recMultiMerge resolve the first half. And reolve the second half
+ *                 in the seem way.
+ *              3. call binaryMerge to merge this two parts and return.
+ * @params      Vector<Queue<int>> &all
+ * @return      merged result
  */
 Queue<int> recMultiMerge(Vector<Queue<int>>& all) {
     Queue<int> result;
-    /* TODO: Implement this function. */
-    return result;
+    Queue<int> l_result;
+    Queue<int> r_result;
+    int k = all.size();
+    auto first_half = all.subList(0, k/2);
+    auto second_half = all.subList(k/2);
+    int l_k = first_half.size();
+    int r_k = second_half.size();
+
+    if (!first_half.isEmpty()){
+        if (l_k <= 1) {
+            l_result.enqueue(first_half[0].dequeue());
+        }
+        else {
+            recMultiMerge(first_half);
+        }
+}
+    if (!second_half.isEmpty()){
+        if (r_k <=1) {
+            r_result.enqueue(second_half[0].dequeue());
+        }
+        else {
+            recMultiMerge(second_half);
+        }
+    }
+
+
+
+
+//    int l_k = first_half.size();
+//    int r_k = second_half.size();
+
+//    if (l_k > 0){
+//        if (l_k == 1) {
+//            l_result = binaryMerge(first_half[0], {});
+//        } else {
+//            recMultiMerge(first_half);
+//        }
+//    }
+
+//    if (r_k > 0){
+//        if (r_k == 1) {
+//            r_result = binaryMerge(second_half[0], {});
+//        } else {
+//            recMultiMerge(second_half);
+//        }
+//    }
+//    result = binaryMerge(l_result, r_result);
+    return result = binaryMerge(l_result, r_result);
 }
 
 
