@@ -120,8 +120,8 @@ Queue<int> recMultiMerge(Vector<Queue<int>>& all) {
     } else {
         l_result = recMultiMerge(first_half);
         r_result = recMultiMerge(second_half);
-        return binaryMerge(l_result, r_result);
     }
+    return result = binaryMerge(l_result, r_result);;
 }
 
 /* * * * * * Test Cases * * * * * */
