@@ -1,0 +1,4 @@
+WINDOW_TITLE("大 O 表示法")
+
+RUN_TESTS_MENU_OPTION()
+MENU_ORDER("PerformanceGUI.cpp")
