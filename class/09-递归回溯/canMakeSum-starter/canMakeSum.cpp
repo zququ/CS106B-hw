@@ -6,6 +6,18 @@
 #include "vector.h"
 using namespace std;
 #define btr
+bool canMakeSumRec(Vector<int> &v, int index, int target){
+    if (target == 0){
+        return true;
+    } else {
+        for (int i = index; i < v.size(); i++){
+            if (canMakeSumRec(v, i + 1, target - v[i])){
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 #ifdef btr
 #endif

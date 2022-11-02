@@ -10,7 +10,7 @@ using namespace std;
  */
 
 int main() {
-    if (runSimpleTests(SELECTED_TESTS)) {
+        if (runSimpleTests(SELECTED_TESTS)) {
         return 0;
     }
     cout << "All done, exiting" << endl;

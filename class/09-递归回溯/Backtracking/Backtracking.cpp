@@ -9,7 +9,7 @@
 #include "vector.h"
 using namespace std;
 
-#define btr
+#define dfs
 
 #ifdef btr
 // 递归回溯：another bactracking

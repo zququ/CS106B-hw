@@ -121,16 +121,19 @@ string LinkABCur(Grid<char>& board, GridLocation loc, string linkedword, Lexicon
     return "";
 }
 
+int scoreBoardRec(Grid<char>& board, Lexicon& lex) {
+
+}
+
+
 int scoreBoard(Grid<char>& board, Lexicon& lex) {
     for (const GridLocation& loc : board.locations()){
         Set<GridLocation> valid_step = validNext(board, loc);
         for (const GridLocation& eachstep : valid_step){
-
-
+            if
+            return scoreBoard(board.get(loc));
         }
     }
-
-
     return points();
 }
 

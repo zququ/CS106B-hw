@@ -8,6 +8,15 @@ using namespace std;
 #define btr
 
 #ifdef btr
+void listSubsetsRec(const Vector<int> &elems, Vector<int> &soFar, int index, Vector<Vector<int>> &result){
+    result.add(soFar);
+    for (int i = index; i < elems.size(); i ++) {
+        soFar.add(elems[i]);
+        listSubsetsRec(elems, soFar, i+1, result);
+        soFar.remove(soFar.size()-1);
+
+    }
+}
 
 #endif
 
@@ -26,7 +35,7 @@ void listSubsetsRec(const Vector<int> &elems, Vector<int> &soFar, int index, Vec
 #endif
 
 void listSubsetsOf(const Vector<int> &elems) {
-    Vector<int> soFar = {};
+    Vector<int> soFar;
     Vector<Vector<int>> result;
     listSubsetsRec(elems, soFar, 0, result);
     for (const Vector<int> &item : result)
