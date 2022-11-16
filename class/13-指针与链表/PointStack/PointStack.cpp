@@ -52,9 +52,9 @@ Point PointStack::pop() {
     }
     Point *temp = head;
     head = head->next;
-    delete temp;
 
     Point result(temp->getX(), temp->getY());
+    delete temp;
     return result;
 }
 

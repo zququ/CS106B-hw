@@ -3,63 +3,72 @@
 #include "testing/SimpleTest.h"
 
 PointStack::PointStack() {
-    allocatedSize = INIT_SIZE;
-    logicalSize = 0;
-    elems = new Point[allocatedSize];
+    head = nullptr;
 }
 
 PointStack::~PointStack() {
-    delete[] elems;
+    clear();
 }
 
-void PointStack::push(Point pt) {
-    if (logicalSize == allocatedSize) {
-        expand();
-    }
-    elems[logicalSize] = pt;
-    logicalSize++;
+void PointStack::push(int x, int y) {
+    Point *node = new Point(x, y);
+    node->next = head;
+    head = node;
 }
 
 Point PointStack::peek() const {
-    if (size() == 0)
+    if (isEmpty())
         error("error!");
-    return elems[logicalSize - 1];
+    return *head;
 }
 
 Point PointStack::pop() {
-    if (size() == 0)
+    if (isEmpty())
         error("error!");
-    return elems[--logicalSize];
+    Point *temp = head;
+    head = head->next;
+    Point result(temp->getX(), temp->getY());
+    delete temp;
+    return result;
 }
 
 void PointStack::clear() {
-    logicalSize = 0;
+    if (!isEmpty()){
+        Point *temp = head;
+        while (head!=nullptr){
+            head = head->next;
+            delete temp;
+        }
+    }
 }
 
 int PointStack::size() const {
-    return logicalSize;
+    int counter = 0;
+    Point* temp = head;
+    while (temp != nullptr){
+        temp = temp-> next;
+        ++ counter;
+    }
+    return counter;
 }
 bool PointStack::isEmpty() const {
-    return size() == 0;
-}
-
-void PointStack::expand() {
-    // do sth
+    return head == nullptr;
 }
 
 std::string PointStack::toString() const {
-    string os = "{";
+    string result = "{";
     bool first = false;
-    for (int i = 0; i < logicalSize; i++) {
+    auto temp = head;
+    while(temp != nullptr){
         if (first) {
-            os += ", ";
+            result += ", ";
         }
         first = true;
-        os += elems[i].toString(); // Point
+        temp = temp->next;
+        result += temp->toString(); // Point
     }
-
-    os += "}\n";
-    return os;
+    result += "}\n";
+    return result;
 }
 
 // ************** 测试程序 ***************
@@ -72,7 +81,7 @@ PROVIDED_TEST("PointStack：构造器") {
 PROVIDED_TEST("PointStack：压栈") {
     PointStack pts;
     if (pts.isEmpty()) {
-        pts.push({3, 5});
+        pts.push(3, 5);
     }
     EXPECT_EQUAL(pts.peek(), {3, 5});
     EXPECT_EQUAL(pts.size(), 1);
@@ -81,8 +90,8 @@ PROVIDED_TEST("PointStack：压栈") {
 PROVIDED_TEST("PointStack：出栈") {
     PointStack pts;
     if (pts.isEmpty()) {
-        pts.push({3, 5});
-        pts.push({2, 4});
+        pts.push(3, 5);
+        pts.push(2, 4);
     }
     pts.pop();
     EXPECT_EQUAL(pts.peek(), {3, 5});
