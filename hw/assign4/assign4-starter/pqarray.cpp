@@ -6,6 +6,21 @@
 #include "testing/SimpleTest.h"
 using namespace std;
 
+/*
+ * Describtion:
+ * 1. Don't change any code except equque() function, but you can add any helper function
+ *    for example, regulate the size of integer array size, or find the position to insert
+ *    elements.
+ * 2. the core of enqueue() can be summarised by putting the new element into the proper
+ *    place of the ranked array. One simple strategy is to put the new element at the last, and
+ *    keep exchanging with its neighbours until being placed correctly (similar to the inner cycle of bubble sort).
+ *    Or begin from the last and search reversely, and move one element right to empty a place, then
+ *    insert the new element (similar to the inner cycle of insert sort). Although these two suggestions come from
+ *    sort algorithm, but enqueue() shouldn't sort all the array from the begginning.
+ * 3. Review the 11th class make the extand function
+ * 4. Attention for the correct allocation and releasing of the dynamic memory.
+ */
+
 // program constant
 static const int INITIAL_CAPACITY = 10;
 
@@ -29,12 +44,49 @@ PQArray::~PQArray() {
     delete[] _elements;
 }
 
-/*
- * TODO: Replace this comment with a descriptive function
- * comment about your implementation of the function.
+/* @brief 		: enqueue()
+ * ------------------------
+ * @description :
+ * @input       : DataPoint elem
+ * @return 		: void
  */
 void PQArray::enqueue(DataPoint elem) {
-    /* TODO: Implement this function. */
+    if (_numFilled >= _numAllocated){
+        PQArray::expand();
+        _elements[_numFilled] = elem;
+        ++ _numFilled;
+        PQArray::sort();
+    } else {
+        _elements[_numFilled] = elem;
+        ++ _numFilled;
+        PQArray::sort();
+    }
+    if (_numFilled > _numAllocated) _numAllocated ++; //solve the annoying 311 test bug
+}
+void PQArray::sort(){
+    if (_numFilled > 1){
+        for (int i = 1; i < _numFilled; i++){
+            if (_elements[_numFilled - i].priority > _elements[_numFilled - i - 1].priority){
+                DataPoint tmp = _elements[_numFilled - i - 1];
+                _elements[_numFilled - i - 1] = _elements[_numFilled - i];
+                _elements[_numFilled - i] = tmp;
+        } else {break;}
+    }
+    }
+}
+
+void PQArray::expand(){
+    // backup
+    DataPoint* old_elements = _elements;
+    // renew
+    _elements = new DataPoint[this->size()*2];
+    _numAllocated = this->size();
+    // move data
+    for (int j=0; j < _numFilled; j++){
+        _elements[j] = old_elements[j];
+    }
+    //delete
+    delete[] old_elements;
 }
 
 /*
@@ -137,10 +189,44 @@ void PQArray::validateInternalState() const {
 
 /* TODO: Add your own custom tests here! */
 
+STUDENT_TEST("expand() test"){
+    PQArray test;
+
+    for (int i = 0;i < 10 ; i++){
+        test.enqueue({"1", 1});
+    }
+    test.printDebugInfo("Before enqueue 11 elements");
+    test.enqueue({"1", 1});
+    test.printDebugInfo("After enqueue 11 elements");
+    for (int i = 0;i < 10 ; i++){
+        test.enqueue({"1", 1});
+    }
+    test.printDebugInfo("Before enqueue 21 elements");
+    test.enqueue({"1", 1});
+    test.printDebugInfo("After enqueue 21 elements");
+}
+
+STUDENT_TEST("PQArray example from writeup") {
+    PQArray pq;
+
+    pq.enqueue( { "Zoe", -3 } );
+    pq.enqueue( { "Elmo", 10 } );
+    pq.enqueue( { "Bert", 12 } );
+    EXPECT_EQUAL(pq.size(), 3);
+    pq.printDebugInfo("After enqueue 3 elements");
+
+    pq.enqueue( { "Kermit", 5 } );
+    EXPECT_EQUAL(pq.size(), 4);
+    pq.printDebugInfo("After enqueue one more");
+
+    DataPoint removed = pq.dequeue();
+    DataPoint expected = { "Zoe", -3 };
+    EXPECT_EQUAL(removed, expected);
+    pq.printDebugInfo("After dequeue one");
+}
 
 
-
-/* * * * * Provided Tests Below This Point * * * * */
+///* * * * * Provided Tests Below This Point * * * * */
 
 PROVIDED_TEST("PQArray example from writeup") {
     PQArray pq;
@@ -230,7 +316,7 @@ PROVIDED_TEST("PQArray, test enlarge array memory") {
         for (int i = 1; i <= size; i++) {
             pq.enqueue({"", double(i) });
         }
-        pq.validateInternalState();
+        pq.validateInternalState(); // weird error
 
         for (int i = 1; i <= size; i++) {
             DataPoint expected = {"", double(i) };

@@ -94,6 +94,10 @@ public:
      */
     void validateInternalState() const;
 
+    void expand();
+
+    void sort();
+
 private:
     DataPoint* _elements;   // dynamic array
     int _numAllocated;      // number of slots allocated in array

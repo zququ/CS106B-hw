@@ -11,16 +11,16 @@ using namespace std;
  * declaration of the struct.
  */
 
-PROVIDED_TEST("Test valid use of array, new/delete") {
-    DataPoint* taskList = new DataPoint[6]; // allocate
+//PROVIDED_TEST("Test valid use of array, new/delete") {
+//    DataPoint* taskList = new DataPoint[6]; // allocate
 
-    for (int i = 0; i < 3; i++) {   // assign entries 0,1,2 (others uninitialized)
-        taskList[i].priority = 1;  // set struct fields using dot notation
-        taskList[i].label = "pset " + integerToString(i+1);
-    }
-    taskList[0].priority += 5;
-    delete[] taskList; // deallocate
-}
+//    for (int i = 0; i < 3; i++) {   // assign entries 0,1,2 (others uninitialized)
+//        taskList[i].priority = 1;  // set struct fields using dot notation
+//        taskList[i].label = "pset " + integerToString(i+1);
+//    }
+//    taskList[0].priority += 5;
+//    delete[] taskList; // deallocate
+//}
 
 /* The special value nullptr is the zero memory address. We use
  * nullptr as a sentinel value to indicate that a pointer has not
@@ -29,6 +29,7 @@ PROVIDED_TEST("Test valid use of array, new/delete") {
  * Uncomment the test case below and see how that illegal
  * access is reported on your system.
  */
+
 // PROVIDED_TEST("Test case that writes to nullptr address") {
 //     DataPoint* taskList = nullptr; // taskList assigned zero address
 //     taskList[0].label = "essay";   // this statement attemps to write to zero address
@@ -43,11 +44,11 @@ PROVIDED_TEST("Test valid use of array, new/delete") {
  */
 //PROVIDED_TEST("Test case that access indexes beyond array bounds") {
 //    DataPoint* taskList = new DataPoint[5](); // ctor () init to 0/empty
-//
+
 //    EXPECT_EQUAL(taskList[0].label, ""); // in bounds, initialized, ok
 //    taskList[974].label += "banana"; // out of bounds, bad, but what _does_ happen?
 //    EXPECT_EQUAL(taskList[974].label, "banana"); // did our bad statement actually succeed?
-//
+
 //    delete[] taskList;
 //}
 
@@ -70,12 +71,12 @@ PROVIDED_TEST("Test valid use of array, new/delete") {
  * access the deleted memory, it can actually look "ok", at least for a while
  * Uncomment the test case below to see what happens on your system.
  */
-//PROVIDED_TEST("Test case that accesses memory after it was deleted") {
-//    DataPoint* taskList = new DataPoint[4];
-//    taskList[0].label = "sleep";
-//    delete[] taskList;
-//        /* taskList points to memory address that is now deleted, so
-//           executing the line below accesses deleted memory */
-//    EXPECT_EQUAL(taskList[0].label, "sleep"); // should label still be sleep? why or why not?
-//}
+PROVIDED_TEST("Test case that accesses memory after it was deleted") {
+    DataPoint* taskList = new DataPoint[4];
+    taskList[0].label = "sleep";
+    delete[] taskList;
+        /* taskList points to memory address that is now deleted, so
+           executing the line below accesses deleted memory */
+    EXPECT_EQUAL(taskList[0].label, "sleep"); // should label still be sleep? why or why not?
+}
 

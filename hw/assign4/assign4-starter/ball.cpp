@@ -18,8 +18,8 @@ static const int MAX_VELOCITY = 5;
 Ball::Ball(int id, GWindow* w) {
     _window = w;
     _id = id;
-    _x = randomInteger(0, _window->getWidth());
-    _y = randomInteger(0, _window->getHeight());
+    _x = randomInteger(0, _window->getWidth() -2*SIZE);
+    _y = randomInteger(0, _window->getHeight()-2*SIZE);
     _vx = randomInteger(MIN_VELOCITY, MAX_VELOCITY);
     _vy = randomInteger(MIN_VELOCITY, MAX_VELOCITY);
 }
