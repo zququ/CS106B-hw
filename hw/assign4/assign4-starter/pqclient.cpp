@@ -45,33 +45,30 @@ void pqSort(Vector<DataPoint>& v) {
  */
 Vector<DataPoint> topK(istream& stream, int k) {
     DataPoint cur;
+    DataPoint cur_check;
     Vector<DataPoint> result(k);
     PQArray pq;
-    int counter = 0;
 
     for (int i=0; i<k; i++){
         stream >> cur;
-        counter++;
         pq.enqueue(cur);
+        cur = {"", -1};
     }
 
     while (stream >> cur) {
-        counter++;
         pq.enqueue(cur);
+        cur = {"", -1};
         pq.dequeue();
         }
 
-    if (counter < k)
-    {
-        for (int i=0; i<counter; i++){
-            result.set(counter-i-1, pq.dequeue());
-        }
-    }
-    else {
     for (int i=0; i<k; i++){
-        result.set(k-i-1, pq.dequeue());
-    }
+        cur_check = pq.dequeue();
+        if (cur_check.priority >= 0){
+            result.set(k-i-1, cur_check);
+        } else {
+            result.remove(k-i-1);
         }
+    }
     return result;
 }
 
