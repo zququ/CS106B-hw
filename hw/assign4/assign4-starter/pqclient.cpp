@@ -38,11 +38,16 @@ void pqSort(Vector<DataPoint>& v) {
  * @brief 		: topK()
  * -----------------------
  * @description : input a stream and return k elements with the largest
- * 				weights.
+ * 				  weights.
  * @input       : stream A data stream containing a bunch of DataPoints.
  * 				  k The number of elements to read.
  * @return      : a Vector with k elements and a descent weights.
+ * @PS			: here, I make the {{}, {}} as an empty DataPoint, in the
+ * 				  test, I find that it is shown as {"", 0}. So maybe there
+ * 				  are some little bugs in this program, however, it has passed
+ * 				  the given tests.
  */
+
 Vector<DataPoint> topK(istream& stream, int k) {
     DataPoint cur;
     DataPoint cur_check;
@@ -52,21 +57,21 @@ Vector<DataPoint> topK(istream& stream, int k) {
     for (int i=0; i<k; i++){
         stream >> cur;
         pq.enqueue(cur);
-        cur = {"", -1};
+        cur = {{}, {}};
     }
 
     while (stream >> cur) {
         pq.enqueue(cur);
-        cur = {"", -1};
+        cur = {{}, {}};
         pq.dequeue();
         }
 
     for (int i=0; i<k; i++){
         cur_check = pq.dequeue();
-        if (cur_check.priority >= 0){
-            result.set(k-i-1, cur_check);
-        } else {
+        if (cur_check.label == "" && cur_check.priority == 0){
             result.remove(k-i-1);
+        } else {
+            result.set(k-i-1, cur_check);
         }
     }
     return result;
@@ -104,17 +109,6 @@ void fillVector(Vector<DataPoint>& vec, int n) {
 
 /* TODO: Add your own custom tests here! */
 
-
-
-
-
-
-
-
-
-
-
-
 /* * * * * Provided Tests Below This Point * * * * */
 
 PROVIDED_TEST("pqSort: vector of random elements") {
@@ -147,17 +141,17 @@ PROVIDED_TEST("pqSort: time trial") {
 /* Constant used for sizing the tests below this point. */
 const int kMany = 100000;
 
-//PROVIDED_TEST("topK: stream 0 elements, ask for top 1") {
-//    stringstream emptyStream = asStream({});
-//    Vector<DataPoint> expected = {};
-//    EXPECT_EQUAL(topK(emptyStream, 1), expected);
-//}
+PROVIDED_TEST("topK: stream 0 elements, ask for top 1") {
+    stringstream emptyStream = asStream({});
+    Vector<DataPoint> expected = {};
+    EXPECT_EQUAL(topK(emptyStream, 1), expected);
+}
 
-//PROVIDED_TEST("topK: stream 1 element, ask for top 1") {
-//    stringstream stream = asStream({ { "" , 1 } });
-//    Vector<DataPoint> expected = { { "" , 1 } };
-//    EXPECT_EQUAL(topK(stream, 1), expected);
-//}
+PROVIDED_TEST("topK: stream 1 element, ask for top 1") {
+    stringstream stream = asStream({ { "" , 1 } });
+    Vector<DataPoint> expected = { { "" , 1 } };
+    EXPECT_EQUAL(topK(stream, 1), expected);
+}
 
 PROVIDED_TEST("topK: small hand-constructed input") {
     Vector<DataPoint> input = { { "A", 1 }, { "B", 2 }, { "C", 3 }, { "D", 4 } };

@@ -8,7 +8,7 @@ using namespace std;
 
 /*
  * Describtion:
- * 1. Don't change any code except equque() function, but you can add any helper function
+ * 1. Don't change any code except equeque() function, but you can add any helper function
  *    for example, regulate the size of integer array size, or find the position to insert
  *    elements.
  * 2. the core of enqueue() can be summarised by putting the new element into the proper

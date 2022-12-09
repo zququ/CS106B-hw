@@ -13,8 +13,10 @@ const int NONE = -1; // used as sentinel index
  * TODO: Replace this comment with a descriptive function
  * comment about your implementation of the function.
  */
+
 PQHeap::PQHeap() {
     /* TODO: Implement this function. */
+    this->numAllocated
 }
 
 /*
@@ -93,7 +95,23 @@ void PQHeap::printDebugInfo(string msg) const {
  * violate the heap property, an error should be thrown.
  */
 void PQHeap::validateInternalState() const {
-    /* TODO: Implement this function. */
+    /*
+     * If there are more elements than spots in the array, we have a problem.
+     */
+    if (_numFilled > _numAllocated) error("Too many elements in not enough space!");
+
+    /* Loop over the elements in the array and compare priority of
+     * neighboring elements. If current element has larger priority
+     * than the previous, array elements are out of order with respect
+     * to our intention. Use error to report this problem.
+     */
+    for (int i = 1; i < size(); i++) {
+        if (_elements[i].priority > _elements[i-1].priority) {
+            printDebugInfo("validateInternalState");
+            error("PQArray has elements out of order at index " + integerToString(i));
+        }
+    }
+}
 }
 
 /*
