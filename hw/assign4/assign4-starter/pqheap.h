@@ -95,11 +95,12 @@ public:
 
 private:
     /* TODO: Add whatever fields, types, and helper functions that you'd like! */
-    DataPoint* elements_1;
-    DataPoint* elements_2;
+    DataPoint* elements;
     int num_Allocated;
     int num_Filled;
-
+    int parentIndex;
+    int leftchildIndex;
+    int rightchildIndex;
     /* While not a strict requirement, we strongly recommend implementing the
      * helper functions declared below. They will make your code much cleaner, and
      * will aid in the debuggin process.
