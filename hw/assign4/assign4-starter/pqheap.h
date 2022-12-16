@@ -39,6 +39,10 @@ public:
      *
      * @return The frontmost element, which is removed from queue.
      */
+
+    void expand();
+    void sort();
+
     DataPoint dequeue();
 
     /**

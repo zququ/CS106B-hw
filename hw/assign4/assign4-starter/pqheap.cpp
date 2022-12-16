@@ -37,13 +37,31 @@ PQHeap::~PQHeap() {
  */
 void PQHeap::enqueue(DataPoint elem) {
      if (num_Filled >= num_Allocated){
-//        PQArray::expand();
+        expand();
+     } else {
+        this->sort();
         elements[num_Filled] = elem;
         num_Filled += 2;
-//        PQArray::sort();
-//        PQArray::sort();
     }
     if (num_Filled > num_Allocated) num_Allocated ++; //solve the annoying 311 test bug
+}
+
+/*
+ * TODO: Replace this comment with a descriptive function
+ *
+ */
+
+void PQHeap::sort() {
+}
+void PQHeap::expand() {
+    DataPoint* old_elements = elements;
+    int old_num_Allocated = num_Allocated;
+    num_Allocated *= 2;
+    elements = new DataPoint[num_Allocated];
+    for (int ele = 0; ele < old_num_Allocated; ele++){
+        elements[ele] = old_elements[ele];
+    }
+    delete[] old_elements;
 }
 
 /*
